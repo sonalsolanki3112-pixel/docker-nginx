@@ -1,0 +1,74 @@
+
+Step 1 — Create project folder:
+mkdir ~/docker-nginx
+cd ~/docker-nginx
+
+Step 2 — Create your HTML file:
+nano index.html
+type code inside index.html
+
+Step 3 — Create Dockerfile:
+nano Dockerfile
+Type this:
+
+FROM nginx
+COPY index.html /usr/share/nginx/html/index.html
+EXPOSE 80
+
+Save Ctrl+S then Ctrl+X
+
+Step 4 — Build image:
+docker build -t mywebsite .
+
+Now run your website container:
+docker run -d -p 8080:80 --name mywebsite-container mywebsite
+
+Part   					Meaning
+-d	               	  	run in background
+-p 8080:80			your port 8080 → container port 80
+--name mywebsite-container 	container name
+mywebsite			your image
+
+Then open your browser and go to:
+http://localhost:8080
+
+if rebuild webside
+Simple — just edit your HTML file and push!
+
+Step 1 — Edit your HTML:
+bashcd ~/docker-nginx
+vim index.html
+Make your changes!
+
+Step 2 — Rebuild Docker image:
+bashdocker build -t mywebsite .
+
+Step 3 — Stop old container:
+bashdocker stop mywebsite-container
+docker rm mywebsite-container
+
+Step 4 — Run new container:
+bashdocker run -d -p 8080:80 --name mywebsite-container mywebsite
+Step 5 — Check browser:
+
+http://localhost:8080
+Your changes are live! 🌐
+
+Step 6 — Push to GitHub:
+bashgit pull
+git add .
+git commit -m "Updated website design"
+git push
+
+Simple flow:
+Edit HTML → rebuild image → restart container → check browser → push to GitHub
+
+Save in notes:
+=== UPDATE WEBSITE ===
+vim index.html          ← edit
+docker build -t mywebsite .  ← rebuild
+docker stop mywebsite-container
+docker rm mywebsite-container
+docker run -d -p 8080:80 --name mywebsite-container mywebsite
+http://localhost:8080   ← check
+git pull → add → commit → push
